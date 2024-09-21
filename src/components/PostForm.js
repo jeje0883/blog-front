@@ -1,53 +1,56 @@
-import React, { useState, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+// src/components/PostForm.js
+import React, { useState } from 'react';
 
-const PostForm = ({ onSubmit, onCancel, initialData = {} }) => {
+const PostForm = ({ onSubmit, onCancel, initialData = {}, isEditing = false }) => {
   const [title, setTitle] = useState(initialData.title || '');
   const [content, setContent] = useState(initialData.content || '');
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Basic validation
     if (!title.trim() || !content.trim()) {
-      setError('Title and Content are required.');
+      setError('Title and content are required.');
       return;
     }
-    onSubmit({ title, content });
+
+    const postData = { title, content };
+    onSubmit(postData);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="post-form-container">
-      <h3 className="post-form-heading">{initialData._id ? 'Edit Post' : 'Add New Post'}</h3>
-      {error && <p className="post-form-error">{error}</p>}
-      <div className="post-form-group">
-        <label className="post-form-label">Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          className="post-form-input"
-        />
-      </div>
-      <div className="post-form-group">
-        <label className="post-form-label">Content:</label>
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows="5"
-          required
-          className="post-form-textarea"
-        ></textarea>
-      </div>
-      <div className="post-form-buttons">
-        <button type="submit" className="post-form-submit">
-          {initialData._id ? 'Update' : 'Create'}
-        </button>
-        <button type="button" onClick={onCancel} className="post-form-cancel">
-          Cancel
-        </button>
-      </div>
-    </form>
+    <div className="post-form-container">
+      <h2>{isEditing ? 'Edit Post' : 'Add New Post'}</h2>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="post-form">
+        <div className="form-group">
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter post title"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="content">Content:</label>
+          <textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Enter post content"
+          ></textarea>
+        </div>
+        <div className="form-actions">
+          <button type="submit">{isEditing ? 'Update Post' : 'Add Post'}</button>
+          <button type="button" onClick={onCancel} className="cancel-button">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

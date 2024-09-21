@@ -23,7 +23,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true); // Start loading
+    //setLoading(true); // Start loading
     try {
       const res = await axiosInstance.post('/users/login', { email, password });
       loginUser(res.data.access);
@@ -33,7 +33,7 @@ const LoginPage = () => {
       setError(error.response?.data?.message || 'An error occurred during login.');
       toast.error(error.response?.data?.message || 'An error occurred during login.');
     } finally {
-      setLoading(false); // Stop loading
+      //setLoading(false); // Stop loading
     }
   };
 

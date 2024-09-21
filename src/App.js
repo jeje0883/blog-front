@@ -1,8 +1,7 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import UserProvider from './context/UserContext';
-import PostList from './components/PostList';
 import PostDetail from './components/PostDetail';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage'; // Assume you have a login page

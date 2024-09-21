@@ -1,5 +1,5 @@
 // client/src/pages/RegisterPage.js
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axiosInstance from '../api/axiosInstance'; // Ensure correct path
 import { useNavigate, Link } from 'react-router-dom';
 import { Notyf } from 'notyf';

@@ -557,3 +557,98 @@ button:hover {
   color: white;
   cursor: pointer;
 }
+
+/* POST FORM */
+/* src/styles/PostForm.css */
+
+/* Container for the post form */
+.post-form-container {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.post-form-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Error message */
+.post-form-container .error-message {
+  color: #ff4c4c; /* Light red for error messages */
+  margin-bottom: 1rem;
+}
+
+/* Form Styles */
+.post-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-form .form-group {
+  margin-bottom: 15px;
+}
+
+.post-form .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #555; /* Slightly lighter gray for labels */
+  font-weight: 500;
+}
+
+.post-form .form-group input,
+.post-form .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  background-color: #fafafa; /* Very light gray background */
+  color: #333;
+}
+
+.post-form .form-group textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px;
+}
+
+/* Form Actions */
+.post-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post-form .form-actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.post-form .form-actions button[type="submit"] {
+  background-color: #28a745; /* Soft green button */
+  color: white;
+  margin-right: 10px;
+}
+
+.post-form .form-actions button[type="submit"]:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.post-form .form-actions .cancel-button {
+  background-color: #dc3545; /* Red cancel button */
+  color: white;
+}
+
+.post-form .form-actions .cancel-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
