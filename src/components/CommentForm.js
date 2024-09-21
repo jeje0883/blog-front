@@ -1,54 +1,49 @@
-import React, { useState, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+// src/components/CommentForm.js
+import React, { useState } from 'react';
+import '../styles/CommentForm.css'; // Import component-specific CSS
 
-const CommentForm = ({ onSubmit, onCancel, initialData = {}, postId }) => { 
-  const { user } = useContext(UserContext);
+const CommentForm = ({ onSubmit, onCancel, initialData = {}, isEditing = false }) => {
   const [comment, setComment] = useState(initialData.comment || '');
   const [error, setError] = useState('');
 
-  console.log("initialData:", initialData);
-  console.log("postId:", postId);
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Basic validation
     if (!comment.trim()) {
       setError('Comment cannot be empty.');
       return;
     }
-    
-    const commentData = {
-      userID: user.id, 
-      comment,
-      commentor: user.username,
-      postId, 
-    };
-    
+
+    const commentData = { comment };
     onSubmit(commentData);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="comment-form-container">
-      <h4 className="comment-form-heading">{initialData._id ? 'Edit Comment' : 'Add Comment'}</h4>
-      {error && <p className="comment-form-error">{error}</p>}
-      <div className="comment-form-input">
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          rows="3"
-          required
-          placeholder="Enter your comment here..."
-          className="comment-form-textarea"
-        ></textarea>
-      </div>
-      <div className="comment-form-buttons">
-        <button type="submit" className="comment-form-submit">
-          {initialData._id ? 'Update' : 'Post'}
-        </button>
-        <button type="button" onClick={onCancel} className="comment-form-cancel">
-          Cancel
-        </button>
-      </div>
-    </form>
+    <div className="comment-form-container">
+      <h2>{isEditing ? 'Edit Comment' : 'Add New Comment'}</h2>
+      {error && <p className="error-message">{error}</p>}
+      <form onSubmit={handleSubmit} className="comment-form">
+        <div className="form-group">
+          <label htmlFor="comment">Comment:</label>
+          <textarea
+            id="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Enter your comment..."
+            rows="4"
+          ></textarea>
+        </div>
+        <div className="form-actions">
+          <button type="submit" className="submit-button">
+            {isEditing ? 'Update Comment' : 'Add Comment'}
+          </button>
+          <button type="button" onClick={onCancel} className="cancel-button">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

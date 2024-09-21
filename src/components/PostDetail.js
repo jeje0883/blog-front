@@ -25,8 +25,12 @@ const PostDetail = () => {
         console.log('Fetching post and comments for postId:', postId);
         const res = await axiosInstance.get(`/posts/${postId}`);
         console.log('Fetched post data:', res.data);
+
+        // Sort comments by time in descending order (latest first)
+        const sortedComments = res.data.comments.sort((a, b) => new Date(b.time) - new Date(a.time));
+
         setPost(res.data);
-        setComments(res.data.comments);
+        setComments(sortedComments);
         setError('');
       } catch (err) {
         console.error('Error fetching post:', err.response?.data?.message || err.message);
@@ -45,7 +49,7 @@ const PostDetail = () => {
       console.log(`Adding comment to post ${postId}:`, commentData);
       const res = await axiosInstance.post(`/posts/${postId}/comments`, commentData);
       console.log('Comment added:', res.data);
-      setComments((prevComments) => [...prevComments, res.data]); // Update comments state
+      setComments((prevComments) => [res.data, ...prevComments]); // Prepend new comment
       setShowAddCommentForm(false);
       setError('');
     } catch (err) {

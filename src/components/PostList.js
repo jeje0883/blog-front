@@ -1,18 +1,17 @@
 // src/components/PostList.js
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axiosInstance from '../api/axiosInstance';
 import PostItem from './PostItem';
 import PostForm from './PostForm';
 import { UserContext } from '../context/UserContext';
 import { Link } from 'react-router-dom';
-
+import '../styles/PostList.css'; // Import component-specific CSS
 
 const PostList = () => {
   const { user } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]); // For displaying filtered results
   const [showAddPostForm, setShowAddPostForm] = useState(false);
-  const [editingPost, setEditingPost] = useState(null);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); // State to track the search input
   const [loading, setLoading] = useState(false); // Loading state
@@ -49,7 +48,7 @@ const PostList = () => {
   };
 
   // Handle adding a new post
-  const handleAddPost = async (postData) => {
+  const handleAddPost = useCallback(async (postData) => {
     try {
       const res = await axiosInstance.post('/posts', postData);
       const newPost = res.data.savedPost;
@@ -69,10 +68,10 @@ const PostList = () => {
       console.error('Error adding post:', err.response?.data?.message || err.message);
       setError('Failed to add post.');
     }
-  };
+  }, [searchTerm]);
 
-  // Handle editing an existing post
-  const handleEditPost = async (postId, updatedData) => {
+  // Handle updating an existing post
+  const handleUpdatePost = useCallback(async (postId, updatedData) => {
     try {
       const res = await axiosInstance.patch(`/posts/${postId}/update`, updatedData);
       const updatedPost = res.data;
@@ -81,26 +80,19 @@ const PostList = () => {
       setPosts(prevPosts => prevPosts.map(post => (post._id === postId ? updatedPost : post)));
 
       // Update filteredPosts based on current searchTerm
-      if (searchTerm) {
-        setFilteredPosts(prevFiltered =>
-          prevFiltered.map(post => (post._id === postId ? updatedPost : post))
-        );
-      } else {
-        setFilteredPosts(prevFiltered =>
-          prevFiltered.map(post => (post._id === postId ? updatedPost : post))
-        );
-      }
+      setFilteredPosts(prevFiltered =>
+        prevFiltered.map(post => (post._id === postId ? updatedPost : post))
+      );
 
-      setEditingPost(null);
       setError('');
     } catch (err) {
-      console.error('Error editing post:', err.response?.data?.message || err.message);
-      setError('Failed to edit post.');
+      console.error('Error updating post:', err.response?.data?.message || err.message);
+      setError('Failed to update post.');
     }
-  };
+  }, []);
 
   // Handle deleting a post
-  const handleDeletePost = async (postId) => {
+  const handleDeletePost = useCallback(async (postId) => {
     try {
       await axiosInstance.delete(`/posts/${postId}/delete`);
 
@@ -108,18 +100,14 @@ const PostList = () => {
       setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
 
       // Remove the post from the filteredPosts array based on searchTerm
-      if (searchTerm) {
-        setFilteredPosts(prevFiltered => prevFiltered.filter(post => post._id !== postId));
-      } else {
-        setFilteredPosts(prevFiltered => prevFiltered.filter(post => post._id !== postId));
-      }
+      setFilteredPosts(prevFiltered => prevFiltered.filter(post => post._id !== postId));
 
       setError('');
     } catch (err) {
       console.error('Error deleting post:', err.response?.data?.message || err.message);
       setError('Failed to delete post.');
     }
-  };
+  }, []);
 
   return (
     <div className="post-list-container">
@@ -133,8 +121,8 @@ const PostList = () => {
       {error && <p className="error-message">{error}</p>}
 
       <div className="post-list-actions">
-        {user && !editingPost && (
-          <button onClick={() => setShowAddPostForm(!showAddPostForm)}>
+        {user && (
+          <button onClick={() => setShowAddPostForm(!showAddPostForm)} className="add-post-button">
             {showAddPostForm ? 'Cancel' : 'Add New Post'}
           </button>
         )}
@@ -149,21 +137,11 @@ const PostList = () => {
         />
       </div>
 
-      {/* Show Add Post Form only if not editing */}
-      {showAddPostForm && !editingPost && (
+      {/* Show Add Post Form */}
+      {showAddPostForm && (
         <PostForm
           onSubmit={handleAddPost}
           onCancel={() => setShowAddPostForm(false)}
-        />
-      )}
-
-      {/* Show Edit Post Form */}
-      {editingPost && (
-        <PostForm
-          initialData={editingPost}
-          onSubmit={(updatedData) => handleEditPost(editingPost._id, updatedData)}
-          onCancel={() => setEditingPost(null)}
-          isEditing={true}
         />
       )}
 
@@ -177,8 +155,9 @@ const PostList = () => {
               <PostItem
                 key={post._id}
                 post={post}
-                onEdit={() => setEditingPost(post)}
-                onDelete={() => handleDeletePost(post._id)}
+                onUpdatePost={handleUpdatePost}
+                onDeletePost={handleDeletePost}
+                searchTerm={searchTerm} // Pass searchTerm if needed
               />
             ))
           ) : (

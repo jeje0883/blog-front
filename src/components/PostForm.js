@@ -1,5 +1,6 @@
 // src/components/PostForm.js
 import React, { useState } from 'react';
+import '../styles/PostForm.css'; // Import component-specific CSS
 
 const PostForm = ({ onSubmit, onCancel, initialData = {}, isEditing = false }) => {
   const [title, setTitle] = useState(initialData.title || '');
@@ -41,10 +42,13 @@ const PostForm = ({ onSubmit, onCancel, initialData = {}, isEditing = false }) =
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Enter post content"
+            rows="5"
           ></textarea>
         </div>
         <div className="form-actions">
-          <button type="submit">{isEditing ? 'Update Post' : 'Add Post'}</button>
+          <button type="submit" className="submit-button">
+            {isEditing ? 'Update Post' : 'Add Post'}
+          </button>
           <button type="button" onClick={onCancel} className="cancel-button">
             Cancel
           </button>

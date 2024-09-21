@@ -1,0 +1,44 @@
+/* src/styles/CommentItem.css */
+
+.comment-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  
+  .comment-meta {
+    font-size: 0.9em;
+    color: #777;
+  }
+  
+  .comment-actions {
+    margin-top: 5px;
+  }
+  
+  .comment-actions button {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comment-actions .edit-button {
+    background-color: #007bff; /* Blue for edit */
+    color: white;
+  }
+  
+  .comment-actions .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .comment-actions .delete-button {
+    background-color: #dc3545; /* Red for delete */
+    color: white;
+  }
+  
+  .comment-actions .delete-button:hover {
+    background-color: #c82333;
+  }
+  

@@ -1,0 +1,76 @@
+/* src/styles/PostList.css */
+
+/* Post List Container */
+.post-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  /* Post List Header */
+  .post-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .post-list-header h1 {
+    color: #343a40;
+  }
+  
+  .post-list-header a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .post-list-header a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: #dc3545;
+    margin-bottom: 1rem;
+  }
+  
+  /* Post List Actions */
+  .post-list-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-post-button {
+    padding: 8px 12px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-post-button:hover {
+    background-color: #218838;
+  }
+  
+  .post-search-input {
+    width: 250px;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  /* Posts List */
+  .posts {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .posts p {
+    color: #6c757d;
+  }
+  
