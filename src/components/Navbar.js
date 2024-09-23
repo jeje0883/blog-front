@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" sticky="top">
       <ul>
         <li>
           <Link to="/">The Exciting Blog</Link>
