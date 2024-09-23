@@ -14,19 +14,19 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token'); // Corrected: Retrieving token directly from 'token' key
 
-    console.log("Token from localStorage:", token); // Debugging: Log the token
+    // console.log("Token from localStorage:", token); // Debugging: Log the token
 
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.log("Authorization header set:", config.headers['Authorization']); // Debugging: Confirm the Authorization header
+      // console.log("Authorization header set:", config.headers['Authorization']); // Debugging: Confirm the Authorization header
     } else {
-      console.log("No token found, Authorization header not set."); // Debugging: Log when no token is found
+      // console.log("No token found, Authorization header not set."); // Debugging: Log when no token is found
     }
 
     return config;
   },
   (error) => {
-    console.error("Error in request interceptor:", error); // Debugging: Log any errors in the interceptor
+    // console.error("Error in request interceptor:", error); // Debugging: Log any errors in the interceptor
     return Promise.reject(error);
   }
 );
@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response) {
       if (error.response.status === 401) {
-        console.error("Session expired, redirecting to login."); // Debugging: Log 401 errors
+        // console.error("Session expired, redirecting to login."); // Debugging: Log 401 errors
         // Optionally, display a notification
         // toast.error('Session expired. Please log in again.');
         // Redirect to login
