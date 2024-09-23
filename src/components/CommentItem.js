@@ -1,10 +1,8 @@
 // src/components/CommentItem.js
-import React, { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import React from 'react';
 import '../styles/CommentItem.css'; // Import component-specific CSS
 
 const CommentItem = ({ comment, onEdit, onDelete, canDelete }) => {
-  const { user } = useContext(UserContext);
 
   const formattedDate = new Date(comment.time).toLocaleString();
 

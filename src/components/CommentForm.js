@@ -21,7 +21,7 @@ const CommentForm = ({ onSubmit, onCancel, initialData = {}, isEditing = false }
 
   return (
     <div className="comment-form-container">
-      <h2>{isEditing ? 'Edit Comment' : 'Add New Comment'}</h2>
+      <h4>{isEditing ? 'Edit Comment' : 'Add New Comment'}</h4>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="comment-form">
         <div className="form-group">
