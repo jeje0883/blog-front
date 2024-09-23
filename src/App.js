@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import UserProvider from './context/UserContext';
 import PostDetail from './components/PostDetail';
 import ProfilePage from './pages/ProfilePage';
@@ -8,18 +8,20 @@ import LoginPage from './pages/LoginPage'; // Assume you have a login page
 import RegisterPage from './pages/RegisterPage'; // Assume you have a signup page
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';  
-import HomePage from './pages/HomePage';
+import PostsPage from './pages/PostsPage';
 import NotFound from './pages/NotFound';
 import './App.css';
 
 const App = () => {
+
   return (
     <UserProvider>
     
       <Router>
       <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+           <Route path="/" element={<Navigate to="/posts" />} />
+          <Route path="/posts" element={<PostsPage />} />
           <Route path="/posts/:postId" element={<PostDetail />} />
           <Route
             path="/profile"
